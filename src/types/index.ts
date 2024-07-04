@@ -161,6 +161,12 @@ export interface GetParams {
   slug: string;
   language: string;
 }
+export interface GetVendorParams {
+  slug: string;
+  language: string;
+  shop_id: string;
+  owner_id: string;
+}
 
 export interface QueryOptions {
   language: string;

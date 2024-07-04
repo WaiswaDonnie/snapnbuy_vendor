@@ -7,6 +7,7 @@ import {
   adminOwnerAndStaffOnly,
   getAuthCredentials,
   hasAccess,
+  ownerOnly,
 } from '@/utils/auth-utils';
 import { Routes } from '@/config/routes';
 import { useShopQuery } from '@/data/shop';
@@ -27,11 +28,11 @@ export default function CreateProductPage() {
   const shopId = shopData?.id!;
   if (
     !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
+    !me?.shops?.map((shop) => shop.id).includes(shopId) 
   ) {
     router.replace(Routes.dashboard);
   }
+// if(hasAccess(ownerOnly,permissions) && me?.shops?.map((shop) => shop.id).includes(shopId))
 
   return (
     <>

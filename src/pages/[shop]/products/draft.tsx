@@ -9,7 +9,7 @@ import ProductList from '@/components/product/product-list';
 import ErrorMessage from '@/components/ui/error-message';
 import Loader from '@/components/ui/loader/loader';
 import { Routes } from '@/config/routes';
-import { useInActiveProductsQuery } from '@/data/product';
+import { useInActiveProductsQuery, useMyInActiveProductsQuery } from '@/data/product';
 import { useShopQuery } from '@/data/shop';
 import { useMeQuery } from '@/data/user';
 import { Category, SortOrder } from '@/types';
@@ -37,6 +37,7 @@ export default function DraftProductPage() {
     slug: shop as string,
   });
   const shopId = shopData?.id!;
+  const ownerId = me?.id
   const [searchTerm, setSearchTerm] = useState('');
   const [type, setType] = useState('');
   const [category, setCategory] = useState('');
@@ -48,17 +49,18 @@ export default function DraftProductPage() {
   const toggleVisible = () => {
     setVisible((v) => !v);
   };
-
-  const { products, paginatorInfo, loading, error } = useInActiveProductsQuery({
-    name: searchTerm,
-    limit: 20,
-    page,
-    orderBy,
-    sortedBy,
-    status: 'draft',
-    shop_id: shopId,
-    language: locale,
-  });
+ const options ={
+  name: searchTerm,
+  limit: 20,
+  page,
+  orderBy,
+  sortedBy,
+  status: 'draft',
+  shop_id: shopId,
+  language: locale,
+  owner_id: ownerId
+}
+  const { products, paginatorInfo, loading, error } = hasAccess(adminOnly,permissions)? useInActiveProductsQuery(options):useMyInActiveProductsQuery(options);
 
   if (loading || fetchingShop)
     return <Loader text={t('common:text-loading')} />;

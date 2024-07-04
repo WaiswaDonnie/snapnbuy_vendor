@@ -42,7 +42,7 @@ import {
   useUpdateProductMutation,
 } from '@/data/product';
 import { isEmpty } from 'lodash';
-import { adminOnly, getAuthCredentials, hasAccess } from '@/utils/auth-utils';
+import { adminOnly, getAuthCredentials, hasAccess, ownerOnly } from '@/utils/auth-utils';
 import { useSettingsQuery } from '@/data/settings';
 import { useModalAction } from '@/components/ui/modal/modal.context';
 import { useCallback } from 'react';
@@ -58,6 +58,9 @@ import StickyFooterPanel from '@/components/ui/sticky-footer-panel';
 import { ProductDescriptionSuggestion } from '@/components/product/product-ai-prompt';
 import RichTextEditor from '@/components/ui/wysiwyg-editor/editor';
 import TooltipLabel from '@/components/ui/tooltip-label';
+import { useMeQuery } from '@/data/user';
+import { toast } from 'react-toastify';
+import { Routes } from '@/config/routes';
 
 type ProductFormProps = {
   initialValues?: Product | null;
@@ -99,8 +102,26 @@ export default function CreateOrUpdateProductForm({
       enabled: !!router.query.shop,
     },
   );
+  const { data: me } = useMeQuery()
   const shopId = shopData?.id!;
-  console.log("shopId: " +shopData);
+  const [isOwner, setIsOwner] = useState(null)
+
+
+  useEffect(() => {
+    if (me) {
+      me && me.shops.forEach(shop => {
+        if (String(shop.id) === String(shopId)) {
+
+          setIsOwner(true)
+        } else {
+          setIsOwner(false)
+
+        }
+      });
+    }
+  }, [me])
+
+
   const isNewTranslation = router?.query?.action === 'translate';
   const showPreviewButton =
     router?.query?.action === 'edit' && Boolean(initialValues?.slug);
@@ -132,30 +153,41 @@ export default function CreateOrUpdateProductForm({
     useUpdateProductMutation();
 
   const onSubmit = async (values: ProductFormValues) => {
-    const inputValues = {
+     const inputValues = {
       language: router.locale,
       ...getProductInputValues(values, initialValues),
     };
     try {
       if (
-        !initialValues 
+        !initialValues
       ) {
         //@ts-ignore
+        let d = {
+          ...inputValues,
+          ...(initialValues?.slug && { slug: initialValues.slug }),
+          shop_id: shopId || initialValues?.shop_id,
+        }
+        console.log(d,"bus");
         createProduct({
           ...inputValues,
           ...(initialValues?.slug && { slug: initialValues.slug }),
           shop_id: shopId || initialValues?.shop_id,
+          
         });
       } else {
         //@ts-ignore
-        updateProduct({
-          ...inputValues,
-          id: initialValues.id!,
-          shop_id: initialValues.shop_id!,
-        });
+
+        if (hasAccess(ownerOnly, permissions) && isOwner) {
+          updateProduct({
+            ...inputValues,
+            id: initialValues.id!,
+            shop_id: initialValues.shop_id!,
+          });
+        }
+
       }
     } catch (error) {
-      
+
       const serverErrors = getErrorMessage(error);
       Object.keys(serverErrors?.validation).forEach((field: any) => {
         setError(field.split('.')[1], {
@@ -165,6 +197,8 @@ export default function CreateOrUpdateProductForm({
       });
     }
   };
+
+
   const product_type = watch('product_type');
   const is_digital = watch('is_digital');
   const is_external = watch('is_external');
@@ -285,7 +319,11 @@ export default function CreateOrUpdateProductForm({
     control,
     name: 'variations',
   });
-
+  // if (!hasAccess(adminOnly, permissions) && isOwner) {
+  //   handleSubmit(onSubmit)
+  // }else if(!hasAccess(adminOnly, permissions)){
+  //   handleSubmit(onSubmit)
+  // }
   return (
     <>
       {errorMessage ? (
@@ -405,11 +443,10 @@ export default function CreateOrUpdateProductForm({
           <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
             <Description
               title={t('form:item-description')}
-              details={`${
-                initialValues
-                  ? t('form:item-description-edit')
-                  : t('form:item-description-add')
-              } ${t('form:product-description-help-text')}`}
+              details={`${initialValues
+                ? t('form:item-description-edit')
+                : t('form:item-description-add')
+                } ${t('form:product-description-help-text')}`}
               className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
             />
 
@@ -476,21 +513,21 @@ export default function CreateOrUpdateProductForm({
                 <Label>{t('form:input-label-status')}</Label>
                 {!isEmpty(statusList)
                   ? statusList?.map((status: any, index: number) => (
-                      <Radio
-                        key={index}
-                        {...register('status')}
-                        label={t(status?.label)}
-                        id={status?.id}
-                        value={status?.value}
-                        className="mb-2"
-                        disabled={
-                          permission &&
+                    <Radio
+                      key={index}
+                      {...register('status')}
+                      label={t(status?.label)}
+                      id={status?.id}
+                      value={status?.value}
+                      className="mb-2"
+                      disabled={
+                        permission &&
                           initialValues?.status === ProductStatus?.Draft
-                            ? true
-                            : false
-                        }
-                      />
-                    ))
+                          ? true
+                          : false
+                      }
+                    />
+                  ))
                   : ''}
                 {errors.status?.message && (
                   <p className="my-2 text-xs text-red-500">

@@ -77,6 +77,7 @@ export const API_ENDPOINTS = {
   DISAPPROVE_TERMS_AND_CONDITIONS: 'disapprove-terms-and-conditions',
   LOW_STOCK_PRODUCTS_ANALYTICS: 'low-stock-products',
   NEW_OR_INACTIVE_PRODUCTS: 'draft-products',
+  MY_NEW_OR_INACTIVE_PRODUCTS: 'my-draft-products',
   LOW_OR_OUT_OF_STOCK_PRODUCTS: 'products-stock',
   CATEGORY_WISE_PRODUCTS: 'category-wise-product',
   CATEGORY_WISE_PRODUCTS_SALE: 'category-wise-product-sale',

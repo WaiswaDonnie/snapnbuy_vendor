@@ -1,3 +1,4 @@
+import { adminOnly, adminOwnerAndStaffOnly, getAuthCredentials, hasAccess } from '@/utils/auth-utils';
 import Router, { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'next-i18next';
@@ -9,10 +10,12 @@ import {
   GetParams,
   ProductPaginator,
   Product,
+  GetVendorParams,
 } from '@/types';
 import { mapPaginatorData } from '@/utils/data-mappers';
 import { Routes } from '@/config/routes';
 import { Config } from '@/config';
+import { useMeQuery } from './user';
 
 export const useCreateProductMutation = () => {
   const queryClient = useQueryClient();
@@ -102,6 +105,20 @@ export const useProductQuery = ({ slug, language }: GetParams) => {
   };
 };
 
+export const useMyProductQuery = ({ slug, language, shop_id,owner_id }: GetVendorParams) => {
+  console.log("donnie", slug, language, shop_id, owner_id)
+  const { data, error, isLoading } = useQuery<Product, Error>(
+    [API_ENDPOINTS.MY_PRODUCTS, { slug, language, shop_id, owner_id }],
+    () => productClient.getVendorProduct({ slug, language,shop_id, owner_id }),
+  );
+
+  return {
+    product: data,
+    error,
+    isLoading,
+  };
+};
+
 export const useProductsQuery = (
   params: Partial<ProductQueryOptions>,
   options: any = {},
@@ -136,7 +153,7 @@ export const useMyProductsQuery = (
       ...options
     }
   )
-  console.log("papa",params)
+  console.log("papa", params)
   return {
     products: data?.data ?? [],
     paginatorInfo: mapPaginatorData(data),
@@ -163,7 +180,10 @@ export const useGenerateDescriptionMutation = () => {
 export const useInActiveProductsQuery = (
   options: Partial<ProductQueryOptions>,
 ) => {
-  const { data, error, isLoading } = useQuery<ProductPaginator, Error>(
+   const { permissions } = getAuthCredentials();
+   const isAdmin = hasAccess(adminOnly, permissions) 
+  
+   const { data, error, isLoading } = useQuery<ProductPaginator, Error>(
     [API_ENDPOINTS.NEW_OR_INACTIVE_PRODUCTS, options],
     ({ queryKey, pageParam }) =>
       productClient.newOrInActiveProducts(
@@ -182,6 +202,30 @@ export const useInActiveProductsQuery = (
   };
 };
 
+export const useMyInActiveProductsQuery = (
+  options: Partial<ProductQueryOptions>,
+) => {
+   const { permissions } = getAuthCredentials();
+   const isAdmin = hasAccess(adminOnly, permissions) 
+   const endPoint = isAdmin ? API_ENDPOINTS.NEW_OR_INACTIVE_PRODUCTS: API_ENDPOINTS.MY_NEW_OR_INACTIVE_PRODUCTS
+   const { data, error, isLoading } = useQuery<ProductPaginator, Error>(
+    [endPoint, options],
+    ({ queryKey, pageParam }) =>
+      productClient.myNewOrInActiveProducts(
+        Object.assign({}, queryKey[1], pageParam),
+      ),
+    {
+      keepPreviousData: true,
+    },
+  );
+
+  return {
+    products: data?.data ?? [],
+    paginatorInfo: mapPaginatorData(data),
+    error,
+    loading: isLoading,
+  };
+};
 export const useProductStockQuery = (options: Partial<ProductQueryOptions>) => {
   const { data, error, isLoading } = useQuery<ProductPaginator, Error>(
     [API_ENDPOINTS.LOW_OR_OUT_OF_STOCK_PRODUCTS, options],

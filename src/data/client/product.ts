@@ -6,6 +6,7 @@ import {
   GetParams,
   ProductQueryOptions,
   GenerateDescriptionInput,
+  GetVendorParams,
 } from '@/types';
 import { API_ENDPOINTS } from './api-endpoints';
 import { crudFactory } from './curd-factory';
@@ -16,6 +17,16 @@ export const productClient = {
   get({ slug, language }: GetParams) {
     return HttpClient.get<Product>(`${API_ENDPOINTS.PRODUCTS}/${slug}`, {
       language,
+      with: 'slug;type;shop;categories;tags;variations.attribute.values;variation_options;variation_options.digital_file;author;manufacturer;digital_file',
+    });
+  },
+  
+  getVendorProduct({ slug, language,shop_id,owner_id}: GetVendorParams) {
+    return HttpClient.get<Product>(`${API_ENDPOINTS.MY_PRODUCTS}/${slug}`, {
+      slug,
+      language,
+      shop_id,
+      owner_id,
       with: 'slug;type;shop;categories;tags;variations.attribute.values;variation_options;variation_options.digital_file;author;manufacturer;digital_file',
     });
   },
@@ -105,6 +116,31 @@ export const productClient = {
       {
         searchJoin: 'and',
         user_id,
+        shop_id,
+        status,
+        name,
+        ...params,
+        search: HttpClient.formatSearchParams({
+          status,
+          name,
+        }),
+      },
+    );
+  },
+  myNewOrInActiveProducts: ({
+    user_id,
+    shop_id,
+    owner_id,
+    status,
+    name,
+    ...params
+  }: Partial<ProductQueryOptions>) => {
+    return HttpClient.get<ProductPaginator>(
+      API_ENDPOINTS.MY_NEW_OR_INACTIVE_PRODUCTS,
+      {
+        searchJoin: 'and',
+        user_id,
+        owner_id,
         shop_id,
         status,
         name,

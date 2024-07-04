@@ -11,7 +11,7 @@ import {
   getAuthCredentials,
   hasAccess,
 } from '@/utils/auth-utils';
-import { useProductQuery } from '@/data/product';
+import { useMyProductQuery, useProductQuery } from '@/data/product';
 import { Config } from '@/config';
 import shop from '@/components/layouts/shop';
 import { Routes } from '@/config/routes';
@@ -29,27 +29,33 @@ export default function UpdateProductPage() {
     slug: query?.shop as string,
   });
   const shopId = shopData?.id!;
+  const ownerId = me?.id!
+  const options = {
+    slug: query.productSlug as string,
+    owner_id: ownerId,
+    shop_id: shopId,
+    language:
+      query.action!.toString() === 'edit' ? locale! : Config.defaultLanguage,
+  } 
   const {
     product,
     isLoading: loading,
     error,
-  } = useProductQuery({
-    slug: query.productSlug as string,
-    language:
-      query.action!.toString() === 'edit' ? locale! : Config.defaultLanguage,
-  });
+  } = hasAccess(adminOnly,permissions) ? useProductQuery(options): useMyProductQuery(options);
   if (loading) return <Loader text={t('common:text-loading')} />;
   if (error) return <ErrorMessage message={error.message} />;
 
+   
+
   if (
     !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
+    !me?.shops?.map((shop) => shop.id).includes(shopId)  
+     
   ) {
     router.replace(Routes.dashboard);
   }
   return (
-    <>
+  <>
       <div className="flex border-b border-dashed border-border-base pb-5 md:pb-7">
         <h1 className="text-lg font-semibold text-heading">
           {t('form:form-title-edit-product')}

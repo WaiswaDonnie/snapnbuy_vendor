@@ -43,6 +43,7 @@ export type ProductFormValues = Omit<
   in_flash_sale: boolean;
   variations?: AttributeValue[];
   variation_options?: Variation[];
+  type_value?: string;
   // image: AttachmentInput;
 };
 
@@ -241,7 +242,9 @@ export function getProductInputValues(
     variations,
     in_flash_sale,
     ...simpleValues
+    
   } = values;
+  console.log("doonnie",values)
   // const { locale } = useRouter();
   // const router = useRouter();
   const processedFile = processFileWithName(digital_file_input);
@@ -254,6 +257,7 @@ export function getProductInputValues(
     author_id: author?.id,
     manufacturer_id: manufacturer?.id,
     type_id: type?.id,
+    type: type,
     product_type: product_type?.value,
     categories: categories.map((category) => category?.id),
     tags: tags.map((tag) => tag?.id),
