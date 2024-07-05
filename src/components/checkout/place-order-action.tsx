@@ -83,6 +83,7 @@ export const PlaceOrderAction: React.FC<{
       delivery_time: delivery_time?.title,
       customer_contact,
       customer_id: customer?.value,
+      
       use_wallet_points,
       payment_gateway: use_wallet_points
         ? PaymentGateway.FULL_WALLET_PAYMENT
