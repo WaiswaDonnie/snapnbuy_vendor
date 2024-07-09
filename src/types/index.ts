@@ -1010,6 +1010,8 @@ export interface CreateManufacturerInput {
   socials?: ShopSocialInput[];
   type_id: string;
   website?: string;
+  slug?: string;
+  products_count?: number;
 }
 
 export interface Withdraw {

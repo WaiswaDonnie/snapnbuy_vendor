@@ -226,12 +226,14 @@ export default function CreateOrUpdateManufacturerForm({
         createManufacturer({
           ...input,
           shop_id: shopId,
+          slug,
           ...(initialValues?.slug && { slug: initialValues.slug }),
         });
       } else {
         updateManufacturer({
           ...input,
           id: initialValues.id!,
+          slug,
           shop_id: shopId,
         });
       }
