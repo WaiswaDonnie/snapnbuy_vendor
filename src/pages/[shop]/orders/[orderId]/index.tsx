@@ -187,13 +187,13 @@ console.log("order",order)
           <OrderViewHeader order={order} wrapperClassName="px-8 py-4" />
         </div>
         <div className="flex w-full">
-          <Button
+          {/* <Button
             onClick={handleDownloadInvoice}
             className="mb-5 bg-blue-500 ltr:ml-auto rtl:mr-auto"
           >
             <DownloadIcon className="h-4 w-4 me-3" />
             {t('common:text-download')} {t('common:text-invoice')}
-          </Button>
+          </Button> */}
         </div>
 
         <div className="flex flex-col items-center lg:flex-row">

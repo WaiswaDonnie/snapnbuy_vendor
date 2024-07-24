@@ -28,6 +28,7 @@ import { ShoppingIcon } from '@/components/icons/summary/shopping';
 import { BasketIcon } from '@/components/icons/summary/basket';
 import { ChecklistIcon } from '../icons/summary/checklist';
 import Search from '../common/search';
+import { useMeQuery } from '@/data/user';
 
 // const TotalOrderByStatus = dynamic(
 //   () => import('@/components/dashboard/total-order-by-status')
@@ -57,7 +58,9 @@ const TopRatedProducts = dynamic(
 export default function Dashboard() {
   const { t } = useTranslation();
   const { locale } = useRouter();
-  const { data, isLoading: loading } = useAnalyticsQuery();
+  const { data: me } = useMeQuery()
+
+  const { data, isLoading: loading } = useAnalyticsQuery(me?.id!);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTimeFrame, setActiveTimeFrame] = useState(1);
@@ -233,23 +236,23 @@ export default function Dashboard() {
           <div className="mt-3.5 inline-flex rounded-full bg-gray-100/80 p-1.5 sm:mt-0">
             {timeFrame
               ? timeFrame.map((time) => (
-                  <div key={time.day} className="relative">
-                    <Button
-                      className={cn(
-                        '!focus:ring-0  relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500',
-                        time.day === activeTimeFrame ? 'text-accent' : '',
-                      )}
-                      type="button"
-                      onClick={() => setActiveTimeFrame(time.day)}
-                      variant="custom"
-                    >
-                      {time.name}
-                    </Button>
-                    {time.day === activeTimeFrame ? (
-                      <motion.div className="absolute bottom-0 left-0 right-0 z-0 h-full rounded-3xl bg-accent/10" />
-                    ) : null}
-                  </div>
-                ))
+                <div key={time.day} className="relative">
+                  <Button
+                    className={cn(
+                      '!focus:ring-0  relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500',
+                      time.day === activeTimeFrame ? 'text-accent' : '',
+                    )}
+                    type="button"
+                    onClick={() => setActiveTimeFrame(time.day)}
+                    variant="custom"
+                  >
+                    {time.name}
+                  </Button>
+                  {time.day === activeTimeFrame ? (
+                    <motion.div className="absolute bottom-0 left-0 right-0 z-0 h-full rounded-3xl bg-accent/10" />
+                  ) : null}
+                </div>
+              ))
               : null}
           </div>
         </div>

@@ -833,25 +833,25 @@ export const siteSettings = {
 
     
 
-      layout: {
-        href: '',
-        label: 'text-page-management',
-        icon: 'SettingsIcon',
-        childMenu: [
-          {
-            href: (shop: string) => `/${shop}${Routes.faqs.list}`,
-            label: 'text-faqs',
-            icon: 'TypesIcon',
-            permissions: adminOwnerAndStaffOnly,
-          },
-          {
-            href: (shop: string) => `/${shop}${Routes.termsAndCondition.list}`,
-            label: 'Terms And Conditions',
-            icon: 'TypesIcon',
-            permissions: adminAndOwnerOnly,
-          },
-        ],
-      },
+      // layout: {
+      //   href: '',
+      //   label: 'text-page-management',
+      //   icon: 'SettingsIcon',
+      //   childMenu: [
+      //     {
+      //       href: (shop: string) => `/${shop}${Routes.faqs.list}`,
+      //       label: 'text-faqs',
+      //       icon: 'TypesIcon',
+      //       permissions: adminOwnerAndStaffOnly,
+      //     },
+      //     {
+      //       href: (shop: string) => `/${shop}${Routes.termsAndCondition.list}`,
+      //       label: 'Terms And Conditions',
+      //       icon: 'TypesIcon',
+      //       permissions: adminAndOwnerOnly,
+      //     },
+      //   ],
+      // },
     },
 
     staff: {
