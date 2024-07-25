@@ -107,19 +107,19 @@ export default function CreateOrUpdateProductForm({
   const [isOwner, setIsOwner] = useState(null)
 
 
-  useEffect(() => {
-    if (me) {
-      me && me.shops.forEach(shop => {
-        if (String(shop.id) === String(shopId)) {
+  // useEffect(() => {
+  //   if (me) {
+  //     me && me.shops.forEach(shop => {
+  //       if (String(shop.id) === String(shopId)) {
 
-          setIsOwner(true)
-        } else {
-          setIsOwner(false)
+  //         setIsOwner(true)
+  //       } else {
+  //         setIsOwner(false)
 
-        }
-      });
-    }
-  }, [me])
+  //       }
+  //     });
+  //   }
+  // }, [me])
 
 
   const isNewTranslation = router?.query?.action === 'translate';
@@ -176,8 +176,8 @@ export default function CreateOrUpdateProductForm({
         });
       } else {
         //@ts-ignore
-
-        if (hasAccess(ownerOnly, permissions) && isOwner) {
+         if (hasAccess(ownerOnly, permissions)) {
+          console.log("guys")
           updateProduct({
             ...inputValues,
             id: initialValues.id!,
