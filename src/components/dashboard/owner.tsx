@@ -80,9 +80,9 @@ const OwnerShopLayout = () => {
       amount: data?.totalRevenue!,
     },
   );
-  const { price: total_refund } = usePrice(
+  const { price: total_orders } = usePrice(
     data && {
-      amount: data?.totalRefunds!,
+      amount: data?.totalOrders!,
     },
   );
 
@@ -149,11 +149,11 @@ const OwnerShopLayout = () => {
             price={total_revenue}
           />
           <StickerCard
-            titleTransKey="sticker-card-title-today-refunds"
+            titleTransKey="sticker-card-title-order"
             // subtitleTransKey="sticker-card-subtitle-order"
             icon={<ShoppingIcon className="h-8 w-8" />}
             color="#865DFF"
-            price={total_refund}
+            price={data?.totalOrders}
           />
           <StickerCard
             titleTransKey="sticker-card-title-total-shops"
@@ -227,7 +227,7 @@ const OwnerShopLayout = () => {
         </div>
       )}
 
-      <div className="grid gap-8 xl:grid-cols-12">
+      {/* <div className="grid gap-8 xl:grid-cols-12">
         <TopRatedProducts
           products={topRatedProducts}
           title={'text-most-rated-products'}
@@ -238,7 +238,7 @@ const OwnerShopLayout = () => {
           title={'text-most-category-products'}
           className="xl:col-span-7 2xl:ltr:-ml-20 2xl:rtl:-mr-20"
         />
-      </div>
+      </div> */}
     </>
   );
 };

@@ -21,10 +21,12 @@ import {
   adminOwnerAndStaffOnly,
   getAuthCredentials,
   hasAccess,
+  ownerOnly,
 } from '@/utils/auth-utils';
 import {
   useDownloadInvoiceMutation,
   useUpdateOrderMutation,
+  useVendorOrderQuery,
 } from '@/data/order';
 import { useOrderQuery } from '@/data/order';
 import { Attachment, OrderStatus, PaymentStatus } from '@/types';
@@ -52,11 +54,13 @@ export default function OrderDetailsPage() {
   const shopId = shopData?.id!;
   const { alignLeft, alignRight, isRTL } = useIsRTL();
   const { mutate: updateOrder, isLoading: updating } = useUpdateOrderMutation();
+  const options = { id: query.orderId as string, language: locale! }
   const {
     order,
     isLoading: loading,
     error,
-  } = useOrderQuery({ id: query.orderId as string, language: locale! });
+  } = useOrderQuery(options);
+
   const { refetch } = useDownloadInvoiceMutation(
     {
       order_id: query.orderId as string,
@@ -87,6 +91,10 @@ export default function OrderDetailsPage() {
   }
 
   const ChangeStatus = ({ order_status }: FormValues) => {
+    if(!hasAccess(adminOnly, permissions) &&
+    !order?.products?.map(product=> product.shop_id).includes(shopId)){
+      return null
+    }
     updateOrder({
       tracking_number: order?.tracking_number as string,
       order_status: order_status?.status as string,
@@ -124,7 +132,7 @@ export default function OrderDetailsPage() {
 
   if (loading) return <Loader text={t('common:text-loading')} />;
   if (error) return <ErrorMessage message={error.message} />;
-console.log("order",order)
+  console.log("order", order)
   const columns = [
     {
       dataIndex: 'image',
@@ -145,8 +153,8 @@ console.log("order",order)
       key: 'name',
       align: alignLeft,
       render: (name: string, item: any) => {
-        console.log(item.pivot[0],"item s");
-        return(
+        console.log(item.pivot[0], "item s");
+        return (
           <div>
             <span>{name}</span>
             <span className="mx-2">x</span>
@@ -175,10 +183,16 @@ console.log("order",order)
   if (
     !hasAccess(adminOnly, permissions) &&
     !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
+    me?.managed_shop?.id != shopId  
   ) {
     router.replace(Routes.dashboard);
   }
+  if (
+    !hasAccess(adminOnly, permissions) &&
+    !order?.products?.map(product=> product.shop_id).includes(shopId)
+  ) {
+    router.replace(Routes.dashboard);
+  }  
 
   return (
     <div>
@@ -207,12 +221,13 @@ console.log("order",order)
               className="flex w-full items-start ms-auto lg:w-2/4"
             >
               <div className="z-20 w-full me-5">
+                 
                 <SelectInput
                   name="order_status"
                   control={control}
                   getOptionLabel={(option: any) => t(option.name)}
                   getOptionValue={(option: any) => option.status}
-                  options={ hasAccess(adminOwnerAndStaffOnly,permissions)?ORDER_STATUS.slice(0, 3):ORDER_STATUS.slice(0, 6)}
+                  options={ORDER_STATUS}
                   placeholder={t('form:input-placeholder-order-status')}
                 />
 

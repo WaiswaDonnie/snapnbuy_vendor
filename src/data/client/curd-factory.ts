@@ -1,5 +1,6 @@
 import type { GetParams, PaginatorInfo } from '@/types';
 import { HttpClient } from './http-client';
+import { API_ENDPOINTS } from './api-endpoints';
 
 interface LanguageParam {
   language: string;
@@ -23,6 +24,9 @@ export function crudFactory<Type, QueryParams extends LanguageParam, InputType>(
     },
     update({tracking_number, ...input }: Partial<InputType> & { tracking_number: string }) {
       return HttpClient.put<Type>(`${endpoint}/${tracking_number}`, input);
+    },
+    updateVendorOrder({tracking_number, ...input }: Partial<InputType> & { tracking_number: string }) {
+      return HttpClient.put<Type>(`${API_ENDPOINTS.VENDOR_ORDERS}/${tracking_number}`, input);
     },
     delete({ id }: { id: string }) {
       return HttpClient.delete<boolean>(`${endpoint}/${id}`);

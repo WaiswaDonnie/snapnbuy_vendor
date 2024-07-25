@@ -14,7 +14,7 @@ import {
 import { orderClient } from './client/order';
 import { useRouter } from 'next/router';
 import { Routes } from '@/config/routes';
-import { adminOnly, getAuthCredentials, hasAccess } from '@/utils/auth-utils';
+import { adminOnly, getAuthCredentials, hasAccess, ownerOnly } from '@/utils/auth-utils';
 import { useMeQuery } from './user';
 
 export const useOrdersQuery = (
@@ -32,7 +32,7 @@ export const useOrdersQuery = (
   const { data, error, isLoading } = useQuery<OrderPaginator, Error>(
     [(permission ? API_ENDPOINTS.ORDERS : API_ENDPOINTS.VENDOR_ORDERS), formatedParams],
     ({ queryKey, pageParam }) => {
-      console.log("hello",pageParam)
+      console.log("hello", pageParam)
       const orderClientParams = Object.assign({}, queryKey[1], pageParam)
       return permission ? orderClient.paginated(orderClientParams) : orderClient.vendorOrdersPaginated(orderClientParams)
     },
@@ -59,6 +59,27 @@ export const useOrderQuery = ({
   const { data, error, isLoading } = useQuery<Order, Error>(
     [API_ENDPOINTS.ORDERS, { id, language }],
     () => orderClient.get({ id, language }),
+    {
+      enabled: Boolean(id), // Set to true to enable or false to disable
+    }
+  );
+
+  return {
+    order: data,
+    error,
+    isLoading,
+  };
+};
+export const useVendorOrderQuery = ({
+  id,
+  language,
+}: {
+  id: string;
+  language: string;
+}) => {
+  const { data, error, isLoading } = useQuery<Order, Error>(
+    [API_ENDPOINTS.VENDOR_ORDERS, { id, language }],
+    () => orderClient.getVendorOrder({ id, language }),
     {
       enabled: Boolean(id), // Set to true to enable or false to disable
     }
@@ -123,15 +144,15 @@ export function useCreateOrderMutation() {
 export const useUpdateOrderMutation = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  return useMutation(orderClient.update, {
-    onSuccess: () => {
-      toast.success(t('common:successfully-updated'));
-    },
-    // Always refetch after error or success:
-    onSettled: () => {
-      queryClient.invalidateQueries(API_ENDPOINTS.ORDERS);
-    },
-  });
+    return useMutation(orderClient.update, {
+      onSuccess: () => {
+        toast.success(t('common:successfully-updated'));
+      },
+      // Always refetch after error or success:
+      onSettled: () => {
+        queryClient.invalidateQueries(API_ENDPOINTS.ORDERS);
+      },
+    });
 };
 
 export const useDownloadInvoiceMutation = (
