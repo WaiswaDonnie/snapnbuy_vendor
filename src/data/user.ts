@@ -14,6 +14,7 @@ import {
   UserQueryOptions,
   LicensedDomainPaginator,
   LicenseAdditionalData,
+  ChangePasswordInput,
 } from '@/types';
 import { mapPaginatorData } from '@/utils/data-mappers';
 import axios from 'axios';
@@ -140,7 +141,7 @@ export const useUpdateUserEmailMutation = () => {
 };
 
 export const useChangePasswordMutation = () => {
-  return useMutation(userClient.changePassword);
+  return  useMutation(userClient.changePassword);
 };
 
 

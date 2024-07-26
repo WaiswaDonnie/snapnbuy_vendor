@@ -17,6 +17,7 @@ import {
 } from '@/utils/auth-utils';
 import { Permission } from '@/types';
 import { useRegisterMutation } from '@/data/user';
+import { toast } from 'react-toastify';
 
 type FormValues = {
   name: string;
@@ -64,6 +65,8 @@ const RegistrationForm = () => {
       {
         onSuccess: (data) => {
           if (data?.token) {
+            console.log("alled",data)
+
             if (hasAccess(allowedRoles, data?.permissions)) {
               setAuthCredentials(data?.token, data?.permissions, data?.role);
               router.push(Routes.dashboard);
@@ -75,12 +78,15 @@ const RegistrationForm = () => {
           }
         },
         onError: (error: any) => {
-          Object.keys(error?.response?.data).forEach((field: any) => {
-            setError(field, {
-              type: 'manual',
-              message: error?.response?.data[field],
-            });
-          });
+          console.log(error,);
+          setErrorMessage(error?.response?.data?.message);
+          // setError(error?.response?.data?.message)
+          // Object.keys(error?.response?.data).forEach((field: any) => {
+          //   setError(field, {
+          //     type: 'manual',
+          //     message: error?.response?.data[field],
+          //   });
+          // });
         },
       },
     );

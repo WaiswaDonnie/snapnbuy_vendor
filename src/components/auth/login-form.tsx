@@ -44,6 +44,7 @@ const LoginForm = () => {
       {
         onSuccess: (data) => {
           if (data?.token) {
+            console.log("alled",data)
             if (hasAccess(allowedRoles, data?.permissions)) {
               setAuthCredentials(data?.token, data?.permissions, data?.role);
               Router.push(Routes.dashboard);
@@ -54,7 +55,10 @@ const LoginForm = () => {
             setErrorMessage('form:error-credential-wrong');
           }
         },
-        onError: () => {},
+        onError: (error) => {
+          setErrorMessage(error?.response?.data?.message);
+
+        },
       }
     );
   }

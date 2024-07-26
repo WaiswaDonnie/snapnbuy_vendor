@@ -1471,6 +1471,7 @@ export interface RegisterInput {
 export interface ChangePasswordInput {
   oldPassword: string;
   newPassword: string;
+  userId: any;
 }
 
 export interface ForgetPasswordInput {

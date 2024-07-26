@@ -8,6 +8,7 @@ import { useChangePasswordMutation } from '@/data/user';
 import { useTranslation } from 'next-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { User } from '@/types';
 
 interface FormValues {
   oldPassword: string;
@@ -24,7 +25,7 @@ const changePasswordSchema = yup.object().shape({
     .required('form:error-confirm-password'),
 });
 
-const ChangePasswordForm = () => {
+const ChangePasswordForm = (me:User) => {
   const { t } = useTranslation();
   const { mutate: changePassword, isLoading: loading } =
     useChangePasswordMutation();
@@ -44,6 +45,7 @@ const ChangePasswordForm = () => {
       {
         oldPassword: values.oldPassword,
         newPassword: values.newPassword,
+        userId: me.id
       },
       {
         onError: (error: any) => {
