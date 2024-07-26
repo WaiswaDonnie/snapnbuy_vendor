@@ -22,8 +22,8 @@ export function crudFactory<Type, QueryParams extends LanguageParam, InputType>(
     create(data: InputType) {
       return HttpClient.post<Type>(endpoint, data);
     },
-    update({tracking_number, ...input }: Partial<InputType> & { tracking_number: string }) {
-      return HttpClient.put<Type>(`${endpoint}/${tracking_number}`, input);
+    update({id, ...input }: Partial<InputType> & { id: any }) {
+      return HttpClient.put<Type>(`${endpoint}/${id}`, input);
     },
     updateVendorOrder({tracking_number, ...input }: Partial<InputType> & { tracking_number: string }) {
       return HttpClient.put<Type>(`${API_ENDPOINTS.VENDOR_ORDERS}/${tracking_number}`, input);
