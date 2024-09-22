@@ -14,7 +14,7 @@ export default function Home() {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeInOut" } },
     };
- 
+
     return (
         <>
             <CustomNavbar />
@@ -25,7 +25,7 @@ export default function Home() {
                     >
                         <div className="flex z-10 flex-col max-md:max-w-full">
                             <div className="flex flex-col px-6 " data-aos="fade-up" data-aos-duration="1000">
-                                 <div
+                                <div
                                     className="text-6xl font-bold md:w-1/2 mt-72 text-center md:text-left   md:mt-6 tracking-tighter leading-[77px] text-slate-900 max-md:max-w-full max-md:text-4xl max-md:leading-[53px]"
                                     data-aos="fade-down"
                                     data-aos-duration="2000"
@@ -60,19 +60,19 @@ export default function Home() {
 
                         </div>
 
-                         <div className="">
+                        <div className="">
                             <img
                                 data-aos="fade-left"
                                 data-aos-duration="2000"
                                 loading="lazy"
                                 src="/hero.svg"
-                            
+
                                 className="object-contain  md:w-5/6 absolute md:-right-12 -top-6 md:-top-24"
                             />
                         </div>
                     </div>
 
-                     <div
+                    <div
                         className="flex px-6 flex-col justify-center items-center mt-72 w-full max-md:mt-10"
                         data-aos="fade-up"
                     >
