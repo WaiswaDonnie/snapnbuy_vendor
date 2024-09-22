@@ -22,7 +22,6 @@ export default function Home() {
                 <div className="flex  flex-col md:px-12 mt-36 max-w-full max-md:mt-10">
                     <div
                         className="flex flex-col relative justify-center   max-md:max-w-full"
-                
                     >
                         <div className="flex z-10 flex-col max-md:max-w-full">
                             <div className="flex flex-col px-6 " data-aos="fade-up" data-aos-duration="1000">
