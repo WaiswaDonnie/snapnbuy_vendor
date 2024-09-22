@@ -57,10 +57,8 @@ export default function Home() {
                                     GET STARTED 🚀
                                 </LinkButton>
                             </div>
-
                         </div>
-
-                        <div className="">
+                        <div >
                             <img
                                 data-aos="fade-left"
                                 data-aos-duration="2000"
