@@ -22,13 +22,11 @@ export default function Home() {
                 <div className="flex  flex-col md:px-12 mt-36 max-w-full max-md:mt-10">
                     <div
                         className="flex flex-col relative justify-center   max-md:max-w-full"
-                    // data-aos="fade-up"
-                    // data-aos-duration="1000"
+                
                     >
                         <div className="flex z-10 flex-col max-md:max-w-full">
                             <div className="flex flex-col px-6 " data-aos="fade-up" data-aos-duration="1000">
-                                {/* Main Title */}
-                                <div
+                                 <div
                                     className="text-6xl font-bold md:w-1/2 mt-72 text-center md:text-left   md:mt-6 tracking-tighter leading-[77px] text-slate-900 max-md:max-w-full max-md:text-4xl max-md:leading-[53px]"
                                     data-aos="fade-down"
                                     data-aos-duration="2000"
@@ -63,8 +61,7 @@ export default function Home() {
 
                         </div>
 
-                        {/* Image of Phone Mockup */}
-                        <div className="">
+                         <div className="">
                             <img
                                 data-aos="fade-left"
                                 data-aos-duration="2000"
@@ -76,8 +73,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Premium Features Section */}
-                    <div
+                     <div
                         className="flex px-6 flex-col justify-center items-center mt-72 w-full max-md:mt-10"
                         data-aos="fade-up"
                     >
