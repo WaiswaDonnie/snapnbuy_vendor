@@ -5,8 +5,8 @@ const DefaultSeo = () => {
   const settings = useSettings();
   return (
     <NextDefaultSeo
-      title={'Devshopug'}
-      titleTemplate={`%s | ${settings?.seo?.metaTitle ?? 'E-Commerce'}`}
+      title={'SnapnBuy'}
+      titleTemplate={`%s | ${settings?.seo?.metaTitle ?? 'Vendor'}`}
       description={settings?.seo?.metaDescription || settings?.siteSubtitle}
       canonical={settings?.seo?.canonicalUrl}
       openGraph={{

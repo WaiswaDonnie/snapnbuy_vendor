@@ -29,7 +29,9 @@ export default function VerifyEmailActions() {
     useResendVerificationEmail();
   const router = useRouter();
   const { emailVerified } = getEmailVerified();
+  console.log(`Verified email`, emailVerified);
   if (emailVerified) {
+    
     router.push(Routes.dashboard);
   }
 

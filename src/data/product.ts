@@ -176,6 +176,20 @@ export const useGenerateDescriptionMutation = () => {
     },
   });
 };
+export const useGenerateProductNameMutation = () => {
+  const queryClient = useQueryClient();
+  const { t } = useTranslation('common');
+  return useMutation(productClient.generateProductName, {
+    onSuccess: () => {
+      toast.success(t('Generated...'));
+    },
+    // Always refetch after error or success:
+    onSettled: (data) => {
+      queryClient.refetchQueries(API_ENDPOINTS.GENERATE_PRODUCT_NAME);
+      data;
+    },
+  });
+};
 
 export const useInActiveProductsQuery = (
   options: Partial<ProductQueryOptions>,

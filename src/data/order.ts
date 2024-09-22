@@ -141,6 +141,19 @@ export function useCreateOrderMutation() {
   };
 }
 
+export const useUpdateVendorOrderMutation = () => {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+    return useMutation(orderClient.updateVendorOrder, {
+      onSuccess: () => {
+        toast.success(t('common:successfully-updated'));
+      },
+      // Always refetch after error or success:
+      onSettled: () => {
+        queryClient.invalidateQueries(API_ENDPOINTS.ORDERS);
+      },
+    });
+};
 export const useUpdateOrderMutation = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();

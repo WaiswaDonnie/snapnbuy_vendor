@@ -42,7 +42,7 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
   return (
     <Link
       href={`/${shop?.slug}`}
-      className="overflow-hidden rounded-lg bg-white"
+      className="overflow-hidden rounded-lg bg-white pb-6"
     >
       <div
         className={classNames(
@@ -99,8 +99,8 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
         </div>
       </div>
 
-      <ul className="mt-4 grid grid-cols-4 divide-x divide-[#E7E7E7] px-2 pb-7 text-center">
-        <li>
+      {/* <ul className="mt-4 grid grid-cols-4 divide-x divide-[#E7E7E7] px-2 pb-7 text-center"> */}
+        {/* <li>
           <ListItem
             title={t('text-title-commission')}
             info={shop?.balance?.admin_commission_rate ?? (0 as number)}
@@ -123,8 +123,8 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
             title={t('text-title-withdraw')}
             info={shop?.balance?.withdrawn_amount as number}
           />
-        </li>
-      </ul>
+        </li> */}
+      {/* </ul> */}
     </Link>
   );
 };

@@ -48,6 +48,7 @@ import { socialIcon } from '@/settings/site.settings';
 import { ShopDescriptionSuggestion } from '@/components/shop/shop-ai-prompt';
 import PhoneNumberInput from '@/components/ui/phone-input';
 import { useMeQuery } from '@/data/user';
+import CountryInput from '../product/country-input';
  
 
 // const socialIcon = [
@@ -91,7 +92,7 @@ type FormValues = {
   description: string;
   cover_image: any;
   logo: any;
-  balance: BalanceInput;
+  // balance?: BalanceInput;
   address: UserAddressInput;
   settings: ShopSettings;
 };
@@ -187,7 +188,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
         }))
         : [],
     };
-
+    console.log("form values",values)
     // Checkout later
     interface ShopOwner{
       id: string;
@@ -235,21 +236,22 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
         owner: owner,
         owner_id: Number(owner.id),
         settings,
-        balance: {
-          id: initialValues.balance?.id,
-          ...values.balance,
-        },
+        // balance: {
+        //   id: initialValues.balance?.id,
+        //   ...values.balance,
+        // },
       });
     } else {
-  
+
       createShop({
         ...values,
+        
         owner: owner,
         owner_id: Number(owner.id),
         settings,
-        balance: {
-          ...values.balance,
-        },
+        // balance: {
+        //   ...values.balance,
+        // },
       });
     }
   }
@@ -351,7 +353,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
             </div>
           </Card>
         </div>
-        <div className="flex flex-wrap pb-8 my-5 border-b border-gray-300 border-dashed sm:my-8">
+        {/* <div className="flex flex-wrap pb-8 my-5 border-b border-gray-300 border-dashed sm:my-8">
           <Description
             title={t('form:shop-payment-info')}
             details={t('form:payment-info-helper-text')}
@@ -365,7 +367,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
               variant="outline"
               className="mb-5"
               error={t(errors.balance?.payment_info?.name?.message!)}
-              required
+              // required
             />
             <Input
               label={t('form:input-label-account-holder-email')}
@@ -373,7 +375,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
               variant="outline"
               className="mb-5"
               error={t(errors.balance?.payment_info?.email?.message!)}
-              required
+              // required
             />
             <Input
               label={t('form:input-label-bank-name')}
@@ -381,17 +383,19 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
               variant="outline"
               className="mb-5"
               error={t(errors.balance?.payment_info?.bank?.message!)}
-              required
+              // required
             />
+            
+
             <Input
               label={t('form:input-label-account-number')}
               {...register('balance.payment_info.account')}
               variant="outline"
               error={t(errors.balance?.payment_info?.account?.message!)}
-              required
+              // required
             />
           </Card>
-        </div>
+        </div> */}
         <div className="flex flex-wrap pb-8 my-5 border-b border-gray-300 border-dashed sm:my-8">
           <Description
             title={t('form:shop-address')}
@@ -427,6 +431,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
                 />
               </div>
             )}
+            {/* <CountryInput control={control} setValue={setValue} /> */}
             <Input
               label={t('form:input-label-country')}
               {...register('address.country')}
@@ -518,7 +523,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
               variant="outline"
               className="mb-5"
               error={t(errors.settings?.website?.message!)}
-              required
+              // required
             />
           </Card>
         </div>

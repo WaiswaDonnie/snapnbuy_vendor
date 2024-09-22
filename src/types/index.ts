@@ -1925,6 +1925,9 @@ export interface SettingCurrencyOptions {
 export interface GenerateDescriptionInput {
   prompt: string;
 }
+export interface GenerateProductNameInput {
+  imageUrl: string;
+}
 
 export interface ItemProps {
   id: number;

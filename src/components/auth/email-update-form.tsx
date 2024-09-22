@@ -36,12 +36,13 @@ export default function EmailUpdateForm({ me }: any) {
             <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
                 <Description
                     title={t('common:text-email')}
-                    details={t('form:email-change-helper-text')}
+                    // details={t('form:email-change-helper-text')}
                     className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
                 />
 
                 <Card className="mb-5 w-full sm:w-8/12 md:w-2/3">
                     <Input
+                    disabled
                         label={t('form:input-label-email')}
                         {...register('email')}
                         error={t(errors.email?.message!)}
@@ -51,11 +52,11 @@ export default function EmailUpdateForm({ me }: any) {
 
                 </Card>
 
-                <div className="text-end w-full">
-                    <Button loading={loading} disabled={loading}>
+                {/* <div className="text-end w-full">
+                    <Button  loading={loading} disabled={true}>
                         {t('form:button-label-save')}
                     </Button>
-                </div>
+                </div> */}
             </div>
         </form>
     );

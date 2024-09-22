@@ -7,11 +7,11 @@ import {
 import { Routes } from '@/config/routes';
 
 export const siteSettings = {
-  name: 'Devshopug',
+  name: 'SnapnBuy',
   description: '',
   logo: {
     url: '/logo.png',
-    alt: 'Devshopug',
+    alt: 'SnapnBuy',
     href: '/',
     width: 138,
     height: 34,
@@ -1142,18 +1142,18 @@ export const siteSettings = {
         icon: 'MyShopOwnerIcon',
         permissions: ownerAndStaffOnly,
       },
-      {
-        href: Routes?.ownerDashboardMessage,
-        label: 'common:sidebar-nav-item-message',
-        icon: 'ChatOwnerIcon',
-        permissions: ownerAndStaffOnly,
-      },
-      {
-        href: Routes?.ownerDashboardNotice,
-        label: 'common:sidebar-nav-item-store-notice',
-        icon: 'StoreNoticeOwnerIcon',
-        permissions: ownerAndStaffOnly,
-      },
+      // {
+      //   href: Routes?.ownerDashboardMessage,
+      //   label: 'common:sidebar-nav-item-message',
+      //   icon: 'ChatOwnerIcon',
+      //   permissions: ownerAndStaffOnly,
+      // },
+      // {
+      //   href: Routes?.ownerDashboardNotice,
+      //   label: 'common:sidebar-nav-item-store-notice',
+      //   icon: 'StoreNoticeOwnerIcon',
+      //   permissions: ownerAndStaffOnly,
+      // },
     ],
   },
   product: {

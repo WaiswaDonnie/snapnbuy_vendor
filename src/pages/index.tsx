@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const generateRedirectUrl =
     locale !== Config.defaultLanguage
       ? `/${locale}${Routes.login}`
-      : Routes.login;
+      : 'home';
   const { token, permissions } = getAuthCredentials(ctx);
   if (
     !isAuthenticated({ token, permissions }) ||

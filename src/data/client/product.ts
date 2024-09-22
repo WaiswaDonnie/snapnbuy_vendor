@@ -7,6 +7,7 @@ import {
   ProductQueryOptions,
   GenerateDescriptionInput,
   GetVendorParams,
+  GenerateProductNameInput,
 } from '@/types';
 import { API_ENDPOINTS } from './api-endpoints';
 import { crudFactory } from './curd-factory';
@@ -103,6 +104,9 @@ export const productClient = {
   },
   generateDescription: (data: GenerateDescriptionInput) => {
     return HttpClient.post<any>(API_ENDPOINTS.GENERATE_DESCRIPTION, data);
+  },
+  generateProductName: (data: GenerateProductNameInput) => {
+    return HttpClient.post<any>(API_ENDPOINTS.GENERATE_PRODUCT_NAME, data);
   },
   newOrInActiveProducts: ({
     user_id,

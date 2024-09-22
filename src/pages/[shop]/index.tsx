@@ -251,7 +251,7 @@ export default function ShopPage() {
                 iconClassName="text-[#FF8D29]"
                 iconInnerClassName="bg-[#FFF0E2]"
               />
-              {role !== 'staff' ? (
+              {/* {role !== 'staff' ? (
                 <>
                   <IconCard
                     content={`${balance?.admin_commission_rate ?? 0}%`}
@@ -275,7 +275,7 @@ export default function ShopPage() {
                     iconInnerClassName="bg-[#F0F2FF]"
                   />
                 </>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
         </div>

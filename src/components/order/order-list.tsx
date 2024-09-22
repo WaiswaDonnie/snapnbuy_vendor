@@ -235,7 +235,7 @@ const OrderList = ({
            
             <ActionButtons
               id={id}
-              detailsUrl={`${router.asPath}/${order.tracking_number}`}
+              detailsUrl={`${router.asPath}/${order.id}`}
               customLocale={order.language}
             />
           </>

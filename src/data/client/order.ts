@@ -40,6 +40,7 @@ export const orderClient = {
       search: HttpClient.formatSearchParams({ tracking_number }),
     });
   },
+ 
   downloadInvoice: (input: GenerateInvoiceDownloadUrlInput) => {
     return HttpClient.post<string>(
       `${API_ENDPOINTS.ORDER_INVOICE_DOWNLOAD}`,

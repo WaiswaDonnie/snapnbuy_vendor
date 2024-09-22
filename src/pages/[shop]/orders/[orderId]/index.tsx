@@ -26,6 +26,7 @@ import {
 import {
   useDownloadInvoiceMutation,
   useUpdateOrderMutation,
+  useUpdateVendorOrderMutation,
   useVendorOrderQuery,
 } from '@/data/order';
 import { useOrderQuery } from '@/data/order';
@@ -53,13 +54,14 @@ export default function OrderDetailsPage() {
   });
   const shopId = shopData?.id!;
   const { alignLeft, alignRight, isRTL } = useIsRTL();
-  const { mutate: updateOrder, isLoading: updating } = useUpdateOrderMutation();
+
   const options = { id: query.orderId as string, language: locale! }
   const {
     order,
     isLoading: loading,
     error,
-  } = useOrderQuery(options);
+  } = hasAccess(adminOnly, permissions) ? useOrderQuery(options) : useVendorOrderQuery(options);
+  const { mutate: updateOrder, isLoading: updating } = hasAccess(adminOnly, permissions) ? useUpdateOrderMutation() : useUpdateVendorOrderMutation();
 
   const { refetch } = useDownloadInvoiceMutation(
     {
@@ -91,13 +93,14 @@ export default function OrderDetailsPage() {
   }
 
   const ChangeStatus = ({ order_status }: FormValues) => {
-    if(!hasAccess(adminOnly, permissions) &&
-    !order?.products?.map(product=> product.shop_id).includes(shopId)){
+    if (!hasAccess(adminOnly, permissions) &&
+      !order?.products?.map(product => product.shop_id).includes(shopId)) {
       return null
     }
     updateOrder({
       tracking_number: order?.tracking_number as string,
       order_status: order_status?.status as string,
+      id: order?.id
     });
   };
   const { price: subtotal } = usePrice(
@@ -183,16 +186,16 @@ export default function OrderDetailsPage() {
   if (
     !hasAccess(adminOnly, permissions) &&
     !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId  
+    me?.managed_shop?.id != shopId
   ) {
     router.replace(Routes.dashboard);
   }
   if (
     !hasAccess(adminOnly, permissions) &&
-    !order?.products?.map(product=> product.shop_id).includes(shopId)
+    !order?.products?.map(product => product.shop_id).includes(shopId)
   ) {
     router.replace(Routes.dashboard);
-  }  
+  }
 
   return (
     <div>
@@ -221,7 +224,7 @@ export default function OrderDetailsPage() {
               className="flex w-full items-start ms-auto lg:w-2/4"
             >
               <div className="z-20 w-full me-5">
-                 
+
                 <SelectInput
                   name="order_status"
                   control={control}

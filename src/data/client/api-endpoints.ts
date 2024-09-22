@@ -56,6 +56,7 @@ export const API_ENDPOINTS = {
   ABUSIVE_REPORTS_DECLINE: 'abusive_reports/reject',
   ABUSIVE_REPORTS: 'abusive_reports',
   GENERATE_DESCRIPTION: 'generate-descriptions',
+  GENERATE_PRODUCT_NAME: 'generate-product-name',
   ORDER_EXPORT: 'export-order-url',
   ORDER_CREATE: 'order/create',
   ORDER_INVOICE_DOWNLOAD: 'download-invoice-url',

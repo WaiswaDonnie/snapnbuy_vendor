@@ -4,8 +4,8 @@ export interface State {
 }
 
 const initialState = {
-  siteTitle: 'Devshopug',
-  siteSubtitle: 'Devshopug',
+  siteTitle: 'SnapnBuy',
+  siteSubtitle: 'SnapnBuy',
   currency: 'UGX',
   currencyOptions: {
     formation: "en-US",
