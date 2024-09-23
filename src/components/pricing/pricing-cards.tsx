@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 const PricingCards = () => {
   const { t } = useTranslation('pricing');
@@ -122,12 +123,12 @@ const PricingCards = () => {
 
               {/* Button */}
               <div className="text-center mt-auto p-6">
-                <a
-                  href={plan.href}
+                <Link
+                  href={'/register'}
                   className="py-2.5 px-5 bg-[rgb(254,51,0)] shadow-sm rounded-full transition-all duration-500 text-base text-white font-semibold text-center w-fit mx-auto hover:bg-[rgb(230,45,0)]"
                 >
                   {plan.buttonText}
-                </a>
+                </Link>
               </div>
             </div>
           ))}
