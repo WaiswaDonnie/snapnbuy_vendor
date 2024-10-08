@@ -1,13 +1,17 @@
 import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
+import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
+import { useMeQuery } from '@/data/user';
+import { useRouter } from 'next/router';
 
 const PricingCards = () => {
   const { t } = useTranslation('pricing');
+  const { data, isLoading: loading, error } = useMeQuery();
+  const router = useRouter();
 
   const pricingPlans = [
     {
       name: 'Personal',
-      price: '0.0 UGX',
+      price: 15000,
       description: 'Small businesses who only need the basics to start selling online',
       features: [
         'No commission fees',
@@ -24,7 +28,7 @@ const PricingCards = () => {
     },
     {
       name: 'Growth',
-      price: '0.0',
+      price: 30000,
       description: 'Online businesses with bigger order volume, fulfillment & marketing needs',
       features: [
         'No commission fees',
@@ -41,7 +45,7 @@ const PricingCards = () => {
     },
     {
       name: 'Pro',
-      price: '0.0 UGX',
+      price: 60000,
       description: 'Designed for large enterprises managing multiple shops and thousands of products across various locations.',
       features: [
         'No commission fees',
@@ -58,6 +62,68 @@ const PricingCards = () => {
       isCustom: true,
     },
   ];
+
+  const handlePayment = (plan) => {
+    if (!data) {
+      router.push('/login');
+      return;
+    }
+  
+    const config = {
+      public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
+      tx_ref: Date.now(),
+      amount: plan.price,
+      currency: 'UGX',
+      payment_options: 'card,mobilemoneyuganda',
+      customer: {
+        email: data.email,
+        phonenumber: data.phoneNumber,
+        name: data.name,
+      },
+      customizations: {
+        title: plan.name,
+        description: plan.description,
+        logo: '/logo.png',
+      },
+    };
+  
+    const handleFlutterPayment = useFlutterwave(config);
+  
+    handleFlutterPayment({
+      callback: async (response) => {
+        if (response.status === 'successful') {
+          // Prepare data for the API call
+          const planDurationDays = plan.name === 'Personal' ? 30 : plan.name === 'Growth' ? 90 : 180; // Example logic for duration
+  
+          // Make API call to update user subscription
+          try {
+            await fetch('http://[::1]:9000/api/payments/update-subscription', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                userId: data.id,
+                subscription_status: 'active',
+                payment_status: true,
+                plan_type: plan.name.toLowerCase(), // Plan type (e.g., 'personal', 'growth', 'pro')
+                plan_duration_days: planDurationDays,
+              }),
+            });
+            console.log('Subscription updated successfully');
+            router.push('/')
+          } catch (error) {
+            console.error('Error updating subscription', error);
+          }
+        }
+        closePaymentModal(); // Close modal after successful payment
+      },
+      onClose: () => {
+        console.log('Payment closed');
+      },
+    });
+  };
+  
 
   return (
     <section className="py-6">
@@ -91,7 +157,7 @@ const PricingCards = () => {
 
                 <div className="flex items-center mb-6">
                   <span className="font-manrope mr-2 text-4xl font-semibold text-[rgb(254,51,0)]">
-                    {plan.price}
+                    {plan.price} UGX
                   </span>
                   <span className="text-xl text-gray-500">/ {t("month")}</span>
                 </div>
@@ -123,12 +189,12 @@ const PricingCards = () => {
 
               {/* Button */}
               <div className="text-center mt-auto p-6">
-                <Link
-                  href={'/register'}
+                <button
+                  onClick={() => handlePayment(plan)}
                   className="py-2.5 px-5 bg-[rgb(254,51,0)] shadow-sm rounded-full transition-all duration-500 text-base text-white font-semibold text-center w-fit mx-auto hover:bg-[rgb(230,45,0)]"
                 >
                   {plan.buttonText}
-                </Link>
+                </button>
               </div>
             </div>
           ))}

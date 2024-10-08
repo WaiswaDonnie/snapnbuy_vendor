@@ -6,6 +6,8 @@ import {
   useProductByCategoryQuery,
   useTopRatedProductsQuery,
 } from '@/data/dashboard';
+import dayjs from 'dayjs'; // For date comparison
+
 import {
   adminOnly,
   adminAndOwnerOnly,
@@ -25,6 +27,8 @@ import Button from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import PageHeading from '@/components/common/page-heading';
 import { useMeQuery } from '@/data/user';
+import Alert from '../ui/alert';
+import Link from 'next/link';
 const ShopList = dynamic(() => import('@/components/dashboard/shops/shops'));
 const Message = dynamic(() => import('@/components/dashboard/shops/message'));
 const StoreNotices = dynamic(
@@ -54,10 +58,11 @@ const OwnerShopLayout = () => {
   const { t } = useTranslation();
   const { locale } = useRouter();
   const router = useRouter();
-  const { data: me } = useMeQuery()
+  const { data: me, isLoading: isLoadingMe } = useMeQuery();
   const { permissions } = getAuthCredentials();
-  const userId = me?.id!
+  const userId = me?.id!;
   const { data, isLoading: loading } = useAnalyticsQuery(userId);
+
   const [activeTimeFrame, setActiveTimeFrame] = useState(1);
   const [orderDataRange, setOrderDataRange] = useState(
     data?.todayTotalOrderByStatus,
@@ -105,7 +110,8 @@ const OwnerShopLayout = () => {
       item.total.toFixed(2),
     );
   }
-
+  const trialEndDate = me && me.trial_end_date ? dayjs(me.trial_end_date) : null;
+  const isTrialExpired = trialEndDate ? trialEndDate.isBefore(dayjs()) : false;
   const timeFrame = [
     { name: t('text-today'), day: 1 },
     { name: t('text-weekly'), day: 7 },
@@ -114,29 +120,44 @@ const OwnerShopLayout = () => {
   ];
 
   useEffect(() => {
-    switch (activeTimeFrame) {
-      case 1:
-        setOrderDataRange(data?.todayTotalOrderByStatus);
-        break;
-      case 7:
-        setOrderDataRange(data?.weeklyTotalOrderByStatus);
-        break;
-      case 30:
-        setOrderDataRange(data?.todayTotalOrderByStatus);
-        break;
-      case 365:
-        setOrderDataRange(data?.yearlyTotalOrderByStatus);
-        break;
-
-      default:
-        setOrderDataRange(orderDataRange);
-        break;
+    if (!loading && data) {
+      switch (activeTimeFrame) {
+        case 1:
+          setOrderDataRange(data?.todayTotalOrderByStatus);
+          break;
+        case 7:
+          setOrderDataRange(data?.weeklyTotalOrderByStatus);
+          break;
+        case 30:
+          setOrderDataRange(data?.monthlyTotalOrderByStatus);
+          break;
+        case 365:
+          setOrderDataRange(data?.yearlyTotalOrderByStatus);
+          break;
+        default:
+          setOrderDataRange(orderDataRange);
+          break;
+      }
     }
-  });
-
+  }, [activeTimeFrame, data, loading]);
+  // if (loading || isLoadingMe) return <div>{t('text-loading')}</div>;
+  // Display subscription logic based on trial status
+  const subscriptionStatus = me?.subscription_status;
   return (
     <>
       <div className="mb-8 rounded-lg bg-light p-5 md:p-8">
+        <div className="mb-7 flex items-center justify-between">
+          {!me ? null : (
+            <>
+              {isTrialExpired && subscriptionStatus === 'trial' ? (
+                <Link href="/pricing">
+                  <Button className="text-white">Upgrade Now</Button>
+                </Link>
+              ) : null}
+              
+            </>
+          )}
+        </div>
         <div className="mb-7 flex items-center justify-between">
           <PageHeading title={t('text-summary')} />
         </div>

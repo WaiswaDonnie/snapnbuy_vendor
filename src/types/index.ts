@@ -354,6 +354,7 @@ export interface Shop {
   settings?: ShopSettings;
   created_at?: string;
   updated_at?: string;
+  custom_website?: string;
 }
 
 export interface Balance {
@@ -436,6 +437,10 @@ export interface User {
   address: Address[];
   orders?: OrderPaginator;
   email_verified: boolean;
+  trial_start_date: any,
+  trial_end_date: any,  
+  subscription_status: string,
+  payment_status: boolean,
 }
 
 export interface Domain {

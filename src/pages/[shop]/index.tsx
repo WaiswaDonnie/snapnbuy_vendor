@@ -90,6 +90,7 @@ export default function ShopPage() {
     created_at,
     slug,
     owner,
+    custom_website,
     id: shop_id,
   } = data ?? {};
 
@@ -157,6 +158,16 @@ export default function ShopPage() {
                 </Link>
               </div>
               <div className="flex flex-col space-y-3 divide-[#E7E7E7] leading-none xl:flex-row xl:space-y-0 xl:space-x-5 xl:divide-x">
+                {owner?.email ? (
+                  <ContentListHorizontal
+                    content={custom_website||""}
+                    // isLink
+                   >
+                    <EmailAtIcon />
+                  </ContentListHorizontal>
+                ) : (
+                  ''
+                )}
                 {owner?.email ? (
                   <ContentListHorizontal
                     content={owner?.email}
