@@ -262,31 +262,7 @@ export default function ShopPage() {
                 iconClassName="text-[#FF8D29]"
                 iconInnerClassName="bg-[#FFF0E2]"
               />
-              {/* {role !== 'staff' ? (
-                <>
-                  <IconCard
-                    content={`${balance?.admin_commission_rate ?? 0}%`}
-                    title={t('common:text-commission-rate')}
-                    icon="CommissionIcon"
-                    iconClassName="text-[#DF0D00]"
-                    iconInnerClassName="bg-[#FFF7F6]"
-                  />
-                  <IconCard
-                    content={totalEarnings as string}
-                    title={t('common:text-gross-sales')}
-                    icon="GrossSaleIcon"
-                    iconClassName="text-[#00AAFF]"
-                    iconInnerClassName="bg-[#EFFAFF]"
-                  />
-                  <IconCard
-                    content={currentBalance as string}
-                    title={t('common:text-current-balance')}
-                    icon="CurrentBalanceIcon"
-                    iconClassName="text-[#0017E1]"
-                    iconInnerClassName="bg-[#F0F2FF]"
-                  />
-                </>
-              ) : null} */}
+              
             </div>
           </div>
         </div>
