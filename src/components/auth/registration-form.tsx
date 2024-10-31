@@ -53,43 +53,7 @@ const RegistrationForm = () => {
   const { t } = useTranslation();
 
   async function onSubmit({ name, email, password, permission }: FormValues) {
-    registerUser(
-      {
-        name,
-        email,
-        password,
-        //@ts-ignore
-        permission,
-      },
-
-      {
-        onSuccess: (data) => {
-          if (data?.token) {
-            console.log("alled",data)
-
-            if (hasAccess(allowedRoles, data?.permissions)) {
-              setAuthCredentials(data?.token, data?.permissions, data?.role);
-              router.push(Routes.dashboard);
-              return;
-            }
-            setErrorMessage('form:error-enough-permission');
-          } else {
-            setErrorMessage('form:error-credential-wrong');
-          }
-        },
-        onError: (error: any) => {
-          console.log(error,);
-          setErrorMessage(error?.response?.data?.message);
-          // setError(error?.response?.data?.message)
-          // Object.keys(error?.response?.data).forEach((field: any) => {
-          //   setError(field, {
-          //     type: 'manual',
-          //     message: error?.response?.data[field],
-          //   });
-          // });
-        },
-      },
-    );
+    return null
   }
 
   return (
