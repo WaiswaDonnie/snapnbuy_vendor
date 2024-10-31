@@ -1,7 +1,8 @@
 {
   "env": {
-    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://devshopug-api.vercel.app/api",
+    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://apiv1.snapnbuy.co/api",
     "NEXT_PUBLIC_SHOP_URL": "https://snapnbuy.co",
+    "NEXT_PUBLIC_API_KEY":"e15e535f-f927-41f7-887a-377c84a9275d",
     "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "",
     "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",
     "APPLICATION_MODE": "production",
@@ -21,7 +22,8 @@
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://devshopug-api.vercel.app/api",
+      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://apiv1.snapnbuy.co/api",
+      "NEXT_PUBLIC_API_KEY":"e15e535f-f927-41f7-887a-377c84a9275d",
       "NEXT_PUBLIC_SHOP_URL": "https://snapnbuy.co",
       "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "",
       "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",

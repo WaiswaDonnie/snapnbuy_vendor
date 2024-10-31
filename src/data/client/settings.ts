@@ -1,4 +1,4 @@
-import { Settings, SettingsInput, SettingsOptionsInput } from '@/types';
+import { Settings, SettingsInput, SettingsOptionsInput, UpdateSettingsInput } from '@/types';
 import { API_ENDPOINTS } from './api-endpoints';
 import { crudFactory } from './curd-factory';
 import { HttpClient } from '@/data/client/http-client';
@@ -10,7 +10,7 @@ export const settingsClient = {
       language,
     });
   },
-  update: ({ ...data }: SettingsInput) => {
-    return HttpClient.post<Settings>(API_ENDPOINTS.SETTINGS, { ...data });
+  update: ({ ...data }: UpdateSettingsInput) => {
+    return HttpClient.put<Settings>(API_ENDPOINTS.SETTINGS+`/${data.id}`, { ...data });
   },
 };

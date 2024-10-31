@@ -21,7 +21,7 @@ import { useForm } from 'react-hook-form';
 import { maintenanceValidationSchema } from './maintenance-validation-schema';
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings;
 };
 
 export default function MaintenanceSettingsForm({ settings }: IProps) {
@@ -50,6 +50,7 @@ export default function MaintenanceSettingsForm({ settings }: IProps) {
   async function onSubmit(values: MaintenanceFormValues) {
     updateSettingsMutation({
       language: locale,
+      id:settings.id,
       // @ts-ignore // // FIXME
       options: {
         ...options,

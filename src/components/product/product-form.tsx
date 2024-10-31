@@ -103,7 +103,7 @@ export default function CreateOrUpdateProductForm({
   ];
 
 
-  console.log("data ai", data);
+
   const { data: shopData } = useShopQuery(
     { slug: router.query.shop as string },
     {

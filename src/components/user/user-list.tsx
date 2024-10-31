@@ -118,7 +118,13 @@ const UserList = ({
       render: (permissions: any) => {
         return (
           <div className="flex flex-wrap gap-1.5 whitespace-nowrap">
-            {permissions?.map(
+              <span
+                  // key={}
+                  className="rounded bg-gray-200/50 px-2.5 py-1"
+                >
+                  {permissions}
+                </span>
+            {/* {permissions?.map(
               ({ name, index }: { name: string; index: number }) => (
                 <span
                   key={index}
@@ -127,7 +133,7 @@ const UserList = ({
                   {name}
                 </span>
               )
-            )}
+            )} */}
           </div>
         );
       },

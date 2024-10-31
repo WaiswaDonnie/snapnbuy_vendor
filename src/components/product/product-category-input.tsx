@@ -23,6 +23,7 @@ const ProductCategoryInput = ({ control, setValue }: Props) => {
   });
   useEffect(() => {
     if (type?.slug && dirtyFields?.type) {
+      // alert("")
       setValue('categories', []);
     }
   }, [type?.slug]);
@@ -32,6 +33,8 @@ const ProductCategoryInput = ({ control, setValue }: Props) => {
     type: type?.slug,
     language: locale,
   });
+  console.log("control",control._options.defaultValues);
+  console.log("categories",categories);
 
   return (
     <div className="mb-5">

@@ -234,7 +234,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
         ...values,
         address: restAddress,
         owner: owner,
-        owner_id: Number(owner.id),
+        owner_id: owner.id,
         settings,
         // balance: {
         //   id: initialValues.balance?.id,
@@ -247,7 +247,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
         ...values,
         
         owner: owner,
-        owner_id: Number(owner.id),
+        owner_id: owner.id,
         settings,
         // balance: {
         //   ...values.balance,

@@ -26,8 +26,8 @@ const loginFormSchema = yup.object().shape({
 });
 
 const defaultValues = {
-  email: 'admin@demo.com',
-  password: 'demodemo',
+  email: 'waiswadonnie@gmail.com',
+  password: 'Developer47@snapnbuy',
 };
 
 const LoginForm = () => {
@@ -44,7 +44,7 @@ const LoginForm = () => {
       {
         onSuccess: (data) => {
           if (data?.token) {
-            console.log("alled",data)
+        
             if (hasAccess(allowedRoles, data?.permissions)) {
               setAuthCredentials(data?.token, data?.permissions, data?.role);
               Router.push(Routes.dashboard);
@@ -99,10 +99,10 @@ const LoginForm = () => {
             <div className="text-center text-sm text-body sm:text-base">
               {t('form:text-no-account')}{' '}
               <Link
-                href={Routes.register}
+                href={"mailto:snapnbuyapp@gmail.com"}
                 className="font-semibold text-accent underline transition-colors duration-200 ms-1 hover:text-accent-hover hover:no-underline focus:text-accent-700 focus:no-underline focus:outline-none"
               >
-                {t('form:link-register-shop-owner')}
+                Contact us
               </Link>
             </div>
           </>

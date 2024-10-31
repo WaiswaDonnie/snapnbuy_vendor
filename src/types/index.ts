@@ -438,9 +438,10 @@ export interface User {
   orders?: OrderPaginator;
   email_verified: boolean;
   trial_start_date: any,
-  trial_end_date: any,  
+  trial_end_date: any,
   subscription_status: string,
   payment_status: boolean,
+
 }
 
 export interface Domain {
@@ -1151,7 +1152,7 @@ export type SeoSettings = {
 };
 
 export interface Settings {
-  id: string;
+  id: number;
   language: string;
   options: SettingsOptions;
 }
@@ -1170,6 +1171,11 @@ export interface PromoPopupFormValues {
 }
 
 export interface SettingsInput {
+  language?: string;
+  options?: SettingsOptionsInput;
+}
+export interface UpdateSettingsInput {
+  id: number;
   language?: string;
   options?: SettingsOptionsInput;
 }
@@ -1551,9 +1557,9 @@ export interface ShopInput {
   settings?: ShopSettingsInput;
   categories?: Category[];
   balance?: BalanceInput;
-  slug?:string;
-  owner_id?: number,
-  owner?:User,
+  slug?: string;
+  owner_id?: string,
+  owner?: User,
 }
 
 export declare type Question = {
@@ -1802,7 +1808,7 @@ export interface ProductQueryOptions extends QueryOptions {
   product_type: string;
   searchedByUser: string;
   owner_id?: string;
-  
+
 }
 
 export interface UserQueryOptions extends QueryOptions {
@@ -1939,63 +1945,63 @@ export interface ItemProps {
   title: string;
 }
 
-export interface ShopPaginator extends PaginatorInfo<Shop> {}
+export interface ShopPaginator extends PaginatorInfo<Shop> { }
 
-export interface WithdrawPaginator extends PaginatorInfo<Withdraw> {}
+export interface WithdrawPaginator extends PaginatorInfo<Withdraw> { }
 
-export interface UserPaginator extends PaginatorInfo<User> {}
+export interface UserPaginator extends PaginatorInfo<User> { }
 
-export interface LicensedDomainPaginator extends PaginatorInfo<Domain> {}
+export interface LicensedDomainPaginator extends PaginatorInfo<Domain> { }
 
-export interface QuestionPaginator extends PaginatorInfo<Question> {}
+export interface QuestionPaginator extends PaginatorInfo<Question> { }
 
-export interface StaffPaginator extends PaginatorInfo<User> {}
+export interface StaffPaginator extends PaginatorInfo<User> { }
 
-export interface OrderPaginator extends PaginatorInfo<Order> {}
+export interface OrderPaginator extends PaginatorInfo<Order> { }
 
-export interface NotifyLogsPaginator extends PaginatorInfo<NotifyLogs> {}
+export interface NotifyLogsPaginator extends PaginatorInfo<NotifyLogs> { }
 
-export interface CouponPaginator extends PaginatorInfo<Coupon> {}
+export interface CouponPaginator extends PaginatorInfo<Coupon> { }
 
-export interface StoreNoticePaginator extends PaginatorInfo<StoreNotice> {}
+export interface StoreNoticePaginator extends PaginatorInfo<StoreNotice> { }
 
-export interface FAQsPaginator extends PaginatorInfo<FAQs> {}
+export interface FAQsPaginator extends PaginatorInfo<FAQs> { }
 
-export interface FlashSalePaginator extends PaginatorInfo<FlashSale> {}
+export interface FlashSalePaginator extends PaginatorInfo<FlashSale> { }
 
 export interface TermsAndConditionsPaginator
-  extends PaginatorInfo<TermsAndConditions> {}
+  extends PaginatorInfo<TermsAndConditions> { }
 
-export interface ProductPaginator extends PaginatorInfo<Product> {}
+export interface ProductPaginator extends PaginatorInfo<Product> { }
 
-export interface CategoryPaginator extends PaginatorInfo<Category> {}
+export interface CategoryPaginator extends PaginatorInfo<Category> { }
 
-export interface TaxPaginator extends PaginatorInfo<Tax> {}
+export interface TaxPaginator extends PaginatorInfo<Tax> { }
 
-export interface ReviewPaginator extends PaginatorInfo<Review> {}
+export interface ReviewPaginator extends PaginatorInfo<Review> { }
 
-export interface TagPaginator extends PaginatorInfo<Tag> {}
+export interface TagPaginator extends PaginatorInfo<Tag> { }
 
-export interface AttributePaginator extends PaginatorInfo<Attribute> {}
+export interface AttributePaginator extends PaginatorInfo<Attribute> { }
 
 export interface AttributeValuePaginator
-  extends PaginatorInfo<AttributeValue> {}
+  extends PaginatorInfo<AttributeValue> { }
 
-export interface ShippingPaginator extends PaginatorInfo<Shipping> {}
+export interface ShippingPaginator extends PaginatorInfo<Shipping> { }
 
-export interface AuthorPaginator extends PaginatorInfo<Author> {}
+export interface AuthorPaginator extends PaginatorInfo<Author> { }
 
-export interface RefundPolicyPaginator extends PaginatorInfo<RefundPolicy> {}
+export interface RefundPolicyPaginator extends PaginatorInfo<RefundPolicy> { }
 
-export interface RefundReasonPaginator extends PaginatorInfo<RefundReason> {}
+export interface RefundReasonPaginator extends PaginatorInfo<RefundReason> { }
 
-export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> {}
+export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> { }
 
-export interface OrderStatusPaginator extends PaginatorInfo<OrderStatus> {}
+export interface OrderStatusPaginator extends PaginatorInfo<OrderStatus> { }
 
-export interface ConversionPaginator extends PaginatorInfo<Conversations> {}
+export interface ConversionPaginator extends PaginatorInfo<Conversations> { }
 
-export interface MessagePaginator extends PaginatorInfo<Message> {}
+export interface MessagePaginator extends PaginatorInfo<Message> { }
 
 export interface FlashSaleProductsRequest {
   id: string;
@@ -2031,7 +2037,7 @@ export interface FlashSaleRequestedProductsQueryOptions
 }
 
 export interface FlashSaleProductsRequestPaginator
-  extends PaginatorInfo<FlashSaleProductsRequest> {}
+  extends PaginatorInfo<FlashSaleProductsRequest> { }
 
 export type MaintenanceFormValues = {
   isUnderMaintenance: boolean;

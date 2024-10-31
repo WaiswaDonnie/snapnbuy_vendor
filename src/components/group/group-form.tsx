@@ -31,8 +31,9 @@ import classNames from 'classnames';
 import CategoryTypeFilter from '@/components/filters/category-type-filter';
 import SwitchInput from '@/components/ui/switch-input';
 import { useProductsQuery } from '@/data/product';
+import { categoryIcons } from '../category/category-icons';
 
-export const updatedIcons = typeIconList.map((item: any) => {
+export const updatedIcons = categoryIcons.map((item: any) => {
   item.label = (
     <div className="flex items-center space-s-5">
       <span className="flex items-center justify-center w-5 h-5">
@@ -243,7 +244,7 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
     const input = {
       language: router.locale,
       name: values.name!,
-      slug: values.slug!,
+      slug: formatSlug(values.name),
       icon: values.icon?.value,
       settings: {
         isHome: values?.settings?.isHome,
@@ -327,8 +328,7 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
     };
 
     if (
-      !initialValues ||
-      !initialValues.translated_languages.includes(router.locale!)
+      !initialValues
     ) {
       createType({
         ...input,

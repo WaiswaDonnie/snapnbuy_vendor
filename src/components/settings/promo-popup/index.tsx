@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings ;
 };
 
 type PromoPopupFormValues = {
@@ -54,6 +54,7 @@ export default function PromoPopUpSettingsForm({ settings }: IProps) {
   async function onSubmit(values: PromoPopupFormValues) {
     updateSettingsMutation({
       language: locale,
+      id:settings.id,
       options: {
         ...options,
         ...values,

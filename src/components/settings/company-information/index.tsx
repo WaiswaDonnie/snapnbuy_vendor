@@ -47,7 +47,7 @@ type CompanyInformationFormValues = {
 };
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings;
 };
 
 export const updatedIcons = socialIcon.map((item: any) => {
@@ -130,6 +130,7 @@ export default function CompanyInfoForm({ settings }: IProps) {
     };
 
     updateSettingsMutation({
+      id: settings.id,
       language: locale,
       //   @ts-ignore
       options: {

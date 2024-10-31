@@ -18,7 +18,7 @@ type FormValues = {
   name: string;
   email: string;
   password: string;
-  // permission: Permission;
+  permission: Permission;
 };
 
 const defaultValues = {
@@ -48,7 +48,7 @@ const CustomerCreateForm = () => {
         name,
         email,
         password,
-        // permission: Permission.StoreOwner,
+        permission: Permission.StoreOwner,
       },
       {
         onError: (error: any) => {

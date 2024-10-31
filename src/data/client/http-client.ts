@@ -12,6 +12,7 @@ const Axios = axios.create({
   timeout: 50000,
   headers: {
     'Content-Type': 'application/json',
+    'x-api-key': process.env.NEXT_PUBLIC_API_KEY, // Ensure API key is sent with each request
   },
 });
 // Change request data/error
@@ -26,6 +27,8 @@ Axios.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
     Authorization: `Bearer ${token}`,
+    'x-api-key': process.env.NEXT_PUBLIC_API_KEY, // Ensure API key is sent with each request
+
   };
   return config;
 });

@@ -34,7 +34,7 @@ type SeoFormValues = {
 };
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings;
 };
 
 export default function SeoSettingsForm({ settings }: IProps) {
@@ -62,6 +62,7 @@ export default function SeoSettingsForm({ settings }: IProps) {
 
   async function onSubmit(values: SeoFormValues) {
     updateSettingsMutation({
+      id: settings.id,
       language: locale,
       // @ts-ignore // // FIXME
       options: {

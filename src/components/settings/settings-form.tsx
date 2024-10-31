@@ -155,7 +155,7 @@ export const updatedIcons = socialIcon.map((item: any) => {
 });
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings;
   taxClasses: Tax[] | undefined | null;
   shippingClasses: Shipping[] | undefined | null;
 };
@@ -319,6 +319,7 @@ export default function SettingsForm({
     const smsEvent = formatEventOptions(values.smsEvent);
     const emailEvent = formatEventOptions(values.emailEvent);
     updateSettingsMutation({
+      id: settings.id,
       language: locale,
       options: {
         ...values,

@@ -223,7 +223,7 @@ export default function CreateOrUpdateCategoriesForm({
     const input = {
       language: router.locale,
       name: values.name,
-      slug: values.slug,
+      slug: formatSlug(values.name),
       details: values.details,
       image: {
         thumbnail: values?.image?.thumbnail,
@@ -235,7 +235,8 @@ export default function CreateOrUpdateCategoriesForm({
       type_id: values.type?.id,
     };
     if (
-      !initialValues ||
+      !initialValues 
+      ||
       !initialValues.translated_languages.includes(router.locale!)
     ) {
       createCategory({

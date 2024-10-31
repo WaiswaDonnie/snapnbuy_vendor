@@ -113,6 +113,7 @@ export default function GeneralSettingsForm({
     updateSettingsMutation({
       language: locale,
       // @ts-ignore // // FIXME
+      id: settings?.id,
       options: {
         ...options,
         ...values,

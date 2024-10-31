@@ -25,7 +25,9 @@ const changePasswordSchema = yup.object().shape({
     .required('form:error-confirm-password'),
 });
 
-const ChangePasswordForm = (me:User) => {
+const ChangePasswordForm = ({ me }: any) => {
+
+
   const { t } = useTranslation();
   const { mutate: changePassword, isLoading: loading } =
     useChangePasswordMutation();
@@ -41,6 +43,7 @@ const ChangePasswordForm = (me:User) => {
   });
 
   async function onSubmit(values: FormValues) {
+  
     changePassword(
       {
         oldPassword: values.oldPassword,

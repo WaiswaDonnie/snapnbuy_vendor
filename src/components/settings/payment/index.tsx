@@ -42,7 +42,7 @@ type paymentGatewayOption = {
 };
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings;
 };
 
 export default function PaymentSettingsForm({ settings }: IProps) {
@@ -102,6 +102,7 @@ export default function PaymentSettingsForm({ settings }: IProps) {
   async function onSubmit(values: PaymentFormValues) {
     updateSettingsMutation({
       language: locale,
+      id: settings.id,
       // @ts-ignore // // FIXME
       options: {
         ...options,

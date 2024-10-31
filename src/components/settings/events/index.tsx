@@ -33,7 +33,7 @@ type EventFormValues = {
 };
 
 type IProps = {
-  settings?: Settings | null;
+  settings: Settings;
 };
 
 export default function EventsSettingsForm({ settings }: IProps) {
@@ -74,6 +74,7 @@ export default function EventsSettingsForm({ settings }: IProps) {
     const pushNotification = formatEventOptions(values.pushNotification);
     updateSettingsMutation({
       language: locale,
+      id:settings.id,
       // @ts-ignore // // FIXME
       options: {
         ...options,
