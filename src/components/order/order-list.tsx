@@ -6,7 +6,7 @@ import usePrice from '@/utils/use-price';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { Product, SortOrder, UserAddress } from '@/types';
+import { Permission, Product, SortOrder, UserAddress } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { useIsRTL } from '@/utils/locals';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ import Badge from '@/components/ui/badge/badge';
 import { ChatIcon } from '@/components/icons/chat';
 import { useCreateConversations } from '@/data/conversations';
 import { SUPER_ADMIN } from '@/utils/constants';
-import { getAuthCredentials } from '@/utils/auth-utils';
+import { adminOnly, getAuthCredentials, hasAccess } from '@/utils/auth-utils';
 import Avatar from '../common/avatar';
 
 type IProps = {
@@ -53,6 +53,7 @@ const OrderList = ({
     sort: SortOrder.Desc,
     column: null,
   });
+
 
   const onSubmit = async (shop_id: string | undefined) => {
     setLoading(shop_id);
@@ -165,6 +166,7 @@ const OrderList = ({
       align: 'center',
       render: function Render(value: any) {
         const delivery_fee = value ? value : 0;
+        console.log("delivery_fee", delivery_fee)
         const { price } = usePrice({
           amount: delivery_fee,
         });
@@ -232,7 +234,7 @@ const OrderList = ({
                 )}
               </>
             )}
-           
+
             <ActionButtons
               id={id}
               detailsUrl={`${router.asPath}/${order.id}`}

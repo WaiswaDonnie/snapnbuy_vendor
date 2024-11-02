@@ -171,7 +171,7 @@ export default function OrderDetailsPage() {
           <span>{name}</span>
           <span className="mx-2">x</span>
           <span className="font-semibold text-heading">
-            {console.log(item)}
+            {console.log(item.pivot,"pivot")}
             {item.pivot.order_quantity}
           </span>
         </div>

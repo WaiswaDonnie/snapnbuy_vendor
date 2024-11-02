@@ -53,7 +53,7 @@ export const useOrderQuery = ({
   id,
   language,
 }: {
-  id: string;
+  id: any;
   language: string;
 }) => {
   const { data, error, isLoading } = useQuery<Order, Error>(
@@ -74,7 +74,7 @@ export const useVendorOrderQuery = ({
   id,
   language,
 }: {
-  id: string;
+  id: any;
   language: string;
 }) => {
   const { data, error, isLoading } = useQuery<Order, Error>(

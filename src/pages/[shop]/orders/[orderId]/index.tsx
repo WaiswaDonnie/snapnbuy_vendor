@@ -55,17 +55,18 @@ export default function OrderDetailsPage() {
   const shopId = shopData?.id!;
   const { alignLeft, alignRight, isRTL } = useIsRTL();
 
-  const options = { id: query.orderId as string, language: locale! }
+  const options = { id: query.orderId , language: locale! }
   const {
     order,
     isLoading: loading,
     error,
   } = hasAccess(adminOnly, permissions) ? useOrderQuery(options) : useVendorOrderQuery(options);
+
   const { mutate: updateOrder, isLoading: updating } = hasAccess(adminOnly, permissions) ? useUpdateOrderMutation() : useUpdateVendorOrderMutation();
 
   const { refetch } = useDownloadInvoiceMutation(
     {
-      order_id: query.orderId as string,
+      order_id: query.orderId,
       language: locale!,
       isRTL,
     },
@@ -156,13 +157,14 @@ export default function OrderDetailsPage() {
       key: 'name',
       align: alignLeft,
       render: (name: string, item: any) => {
-        console.log(item.pivot[0], "item s");
+        const {price} = usePrice({amount:item.pivot.unit_price})
         return (
           <div>
             <span>{name}</span>
             <span className="mx-2">x</span>
             <span className="font-semibold text-heading">
-              {item.pivot[0]?.order_quantity}
+              {item.pivot?.order_quantity}<br />
+              {price && price}<br />
             </span>
           </div>
         )
@@ -174,9 +176,9 @@ export default function OrderDetailsPage() {
       key: 'pivot',
       align: alignRight,
       render: function Render(pivot: any) {
-
+console.log(pivot,"pivot");
         const { price } = usePrice({
-          amount: Number(pivot[0]?.subtotal),
+          amount: Number(pivot?.subtotal),
         });
         return <span>{price}</span>;
       },
